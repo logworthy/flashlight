@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# library(Flashlight)\n# library(shiny)\n# runApp(getApp())\n",
+    "created" : 1491340955310.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3725952108",
+    "id" : "F17A7CA1",
+    "lastKnownWriteTime" : 1491350435,
+    "last_content_update" : 1491350435383,
+    "path" : "~/Dev/Flashlight/tests/testApp.R",
+    "project_path" : "tests/testApp.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

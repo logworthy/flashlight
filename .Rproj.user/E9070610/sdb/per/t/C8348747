@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#' @import shiny\nNULL\n\n#' Get the shinyUI object\n#'\n#' @return shinyUI object\n#' @export\n#'\ngetUI <- function() {\n\n  # Define UI for application that draws a histogram\n  shinyUI(fluidPage(\n\n    # Application title\n    titlePanel(\"Hello Shiny!\"),\n\n    # Sidebar with a slider input for the number of bins\n    sidebarLayout(\n      sidebarPanel(\n        actionButton(\"refresh\", \"Refresh\"),\n        textInput(\"dir\", NULL)\n      ),\n\n      # Show a plot of the generated distribution\n      mainPanel(\n        dataTableOutput(\"result\")\n      )\n    )\n  ))\n\n}\n\n#' get the shinyServer\n#'\n#' @return shinyServer object\n#' @export\n#'\ngetServer <- function() {\n\n  shinyServer(function(input, output) {\n\n    # Expression that generates a histogram. The expression is\n    # wrapped in a call to renderPlot to indicate that:\n    #\n    #  1) It is \"reactive\" and therefore should re-execute automatically\n    #     when inputs change\n    #  2) Its output type is a plot\n    observeEvent(input$refresh, {\n      target_dir <- input$dir\n      if(!dir.exists(target_dir)) target_dir <- '.'\n      result <- data.frame(name=list.files(target_dir), size=file.size(list.files(target_dir)))\n      output$result <- renderDataTable(result, options=list(pageLength=10))\n    })\n\n  })\n\n}\n\n#' Get the shinyApp\n#'\n#' @return a list with components ui and server\n#' @export\n#'\ngetApp <- function() {\n  list(ui=getUI(), server=getServer())\n}\n\n",
+    "created" : 1491285993406.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1742931280",
+    "id" : "C8348747",
+    "lastKnownWriteTime" : 1491340913,
+    "last_content_update" : 1491340913645,
+    "path" : "~/Dev/Flashlight/R/shinyApp.R",
+    "project_path" : "R/shinyApp.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

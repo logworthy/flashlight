@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(futile.logger)\ninstall.packages('Rserve')\nlibrary(Rserve)\ninstall.packages('RSclient')\nlibrary(RSclient)\n\n# start server\n# connect to server\n# start code watch reload job\n# when reload triggers\n# kill & restart app\n\nfoo <- Rserve(port=24601, wait=F)\nbar <- RS.connect(port=24601)\nRS.close(bar)\n\nstopApp()\n\n# watch for changes to any file in a given folder + subs\nwatch <- function(root) {\n\n  # get list of files\n  gen_filenames <- function() {\n    list.files(root, recursive=T, include.dirs=F, full.names =T)\n  }\n\n  # get modification times for files\n  check_files <- function() {\n    files <- sort(gen_filenames())\n    structure(file.mtime(files), .Names=files)\n  }\n\n  # checking loop\n  # TODO:  break the loop?\n  last_result <- check_files()\n  while(T) {\n    result <- check_files()\n    if(!identical(result, last_result)) {\n      last_result <- result\n      flog.info('File change detected, reloading...')\n    }\n    Sys.sleep(1)\n  }\n\n}\n\n",
+    "created" : 1491351939922.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1625001686",
+    "id" : "DE4333F4",
+    "lastKnownWriteTime" : 1491373697,
+    "last_content_update" : 1491373697200,
+    "path" : "~/Dev/Flashlight/R/autoreload.R",
+    "project_path" : "R/autoreload.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

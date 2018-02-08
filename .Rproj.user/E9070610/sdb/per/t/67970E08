@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#install.packages('RODBC')\nlibrary(RODBC)\nlibrary(data.table)\nlibrary(futile.logger)\nlibrary(rpart)\n\nserver <- '10.203.185.147'\nuid <- 'review'\npwd <- '#Password1'\n\ncstr <- sprintf('Driver={SQL Server Native Client 11.0};Server=%s;Uid=%s;Pwd=%s;', server, uid, pwd)\n\ncon <- odbcDriverConnect(cstr)\n\n# get data - ~1m 20s\nflog.info('Downloading data')\nresult <- data.table(sqlQuery(con, 'select * from AucklandCouncil_MS.dbo.tblSpendCategory_Training'))\nflog.info('Download complete')\n\nresult[,`Category ID` := as.factor(`Category ID`)]\n\nignore_vars <- c('Fiscal Year', 'Fiscal Period', 'TotalQuantity', 'TotalSum', 'FreqVariable')\ntarget_var <- c('Category ID')\npredictors <- setdiff(names(result), c(ignore_vars, target_var))\n\nmodel_formula <- formula(\n  sprintf('%s ~ %s',\n          sprintf('`%s`', target_var),\n          paste(sprintf('`%s`', predictors),\n          collapse='+'))\n)\n\n# 35s\nflog.info('Training model')\nmodel_trained <- rpart(model_formula, result)\nflog.info('Model trained')\n\npredict(model_trained, result)\n\n\n\n",
+    "created" : 1491978738007.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "967401874",
+    "id" : "67970E08",
+    "lastKnownWriteTime" : 1491980104,
+    "last_content_update" : 1491980104554,
+    "path" : "C:/Users/darcyly/Desktop/Auckland/wip1.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
